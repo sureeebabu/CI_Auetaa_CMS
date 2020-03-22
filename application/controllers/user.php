@@ -10,6 +10,7 @@ class user extends CI_Controller
 		$this->load->database();
 		$this->load->helper('url');
 		$this->load->model('User_Model');
+		$this->load->library("pagination");
 		if (empty($this->session->userdata("userEmail"))) {
 			redirect(site_url(), 'login/index');
 		}
@@ -17,8 +18,48 @@ class user extends CI_Controller
 
 	public function index()
 	{
-		$result['data'] = $this->User_Model->displayrecords();
-		$this->load->view('list_users_view', $result);
+
+		// $config = array();
+		// $config["base_url"] = base_url() . "user/index/";
+		// $config["total_rows"] = $this->User_Model->record_count();
+		// $config["per_page"] = 1	;
+		// $config["uri_segment"] = 3;
+		// $choice = $config["total_rows"] / $config["per_page"];
+		// $config["num_links"] = round($choice);
+
+		// $this->pagination->initialize($config);
+
+		// $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+		// $data["results"] = $this->User_Model->displayrecords($config["per_page"], $page);
+		// $data["links"] = $this->pagination->create_links();
+		
+		
+		// // echo $this->pagination->create_links();
+		// $this->load->view("list_users_view", $data);
+
+			$config = array();
+			$config["base_url"] = base_url() . "user/index";
+			$config["total_rows"] = $this->User_Model->record_count();
+
+
+
+			$config["per_page"] = 2;
+			$config["uri_segment"] = 3;
+
+			$this->pagination->initialize($config);
+			$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+			$data["results"] = $this->User_Model->displayrecords($config["per_page"], $page);
+			$data["links"] = $this->pagination->create_links();
+
+			// echo $config["total_rows"];
+			// echo exit;
+
+			$this->load->view("list_users_view", $data);
+
+
+
+		// $result['data'] = $this->User_Model->displayrecords();
+		// $this->load->view('list_users_view', $result);
 	}
 
 
@@ -36,8 +77,8 @@ class user extends CI_Controller
 			'userPassword' => $this->input->post('txtUserPassword'),
 			'userMobileNo' => $this->input->post('txtUserMobNo'),
 			'userIsActive' => $userIsActive,
-			'userRole' => "Admin",
-			'userRole' =>$this->input->post('ddlUserRole'),
+			// 'userRole' => "Admin",
+			'userRole' => $this->input->post('ddlUserRole'),
 			'userImageName' => "noImg.png",
 
 		);
@@ -71,7 +112,7 @@ class user extends CI_Controller
 		$userID = $this->db->where('userID', $userID);
 		$this->db->delete('usermaster', $userID);
 		$_SESSION['msg'] = "User Deleted Successfully";
-		redirect("user/index");
+		redirect("user");
 	}
 
 	public function updateUserData($userID)
@@ -88,13 +129,13 @@ class user extends CI_Controller
 			'userEmail' => $this->input->post('txtUserEmail'),
 			'userMobileNo' => $this->input->post('txtUserMobNo'),
 			'userIsActive' => $userIsActive,
-			'userRole' =>$this->input->post('ddlUserRole'),
+			'userRole' => $this->input->post('ddlUserRole'),
 
 		);
 		$this->db->where('userID', $userID);
 		$this->db->update('usermaster', $data);
 
 		$_SESSION['msg'] = "Updated User Details";
-		redirect("user/index");
+		redirect("user");
 	}
 }
