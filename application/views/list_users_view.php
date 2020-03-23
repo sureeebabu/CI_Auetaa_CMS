@@ -103,16 +103,11 @@ include('header.php');
 
 								</div>
 
-								<div class="row">
-									<div class="col-xs-6">
-										<div class="dataTables_info" id="dynamic-table_info" role="status" aria-live="polite">
-											Showing 1 to 10 of 23 entries
-										</div>
-									</div>
-									<div class="col-xs-6">
+								<div class="row">								
+									<div class="col-md-12">
 										<div class="dataTables_paginate paging_simple_numbers" id="dynamic-table_paginate">
 											<ul class="pagination">
-												<li>
+												<li class="paginate_button ">
 													<?php echo $links; ?>
 												</li>
 											</ul>
@@ -121,7 +116,7 @@ include('header.php');
 									</div>
 								</div>
 
-								
+
 
 							</div><!-- /.span -->
 						</div><!-- /.row -->

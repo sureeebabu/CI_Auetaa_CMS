@@ -18,30 +18,34 @@ class user extends CI_Controller
 
 	public function index()
 	{
-
-		// $config = array();
-		// $config["base_url"] = base_url() . "user/index/";
-		// $config["total_rows"] = $this->User_Model->record_count();
-		// $config["per_page"] = 1	;
-		// $config["uri_segment"] = 3;
-		// $choice = $config["total_rows"] / $config["per_page"];
-		// $config["num_links"] = round($choice);
-
-		// $this->pagination->initialize($config);
-
-		// $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
-		// $data["results"] = $this->User_Model->displayrecords($config["per_page"], $page);
-		// $data["links"] = $this->pagination->create_links();
-		
-		
-		// // echo $this->pagination->create_links();
-		// $this->load->view("list_users_view", $data);
-
 			$config = array();
 			$config["base_url"] = base_url() . "user/index";
 			$config["total_rows"] = $this->User_Model->record_count();
 
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = '</ul>';
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="active"><a href="#">';
+			$config['cur_tag_close'] = '</a></li>';
+			$config['prev_tag_open'] = '<li>';
+			$config['prev_tag_close'] = '</li>';
+			$config['first_tag_open'] = '<li>';
+			$config['first_tag_close'] = '</li>';
+			$config['last_tag_open'] = '<li>';
+			$config['last_tag_close'] = '</li>';
 
+			// $config['prev_link'] = '<i class="fa fa-long-arrow-left"></i>Previous Page';
+			$config['prev_link'] = 'Previous';
+			$config['prev_tag_open'] = '<li>';
+			$config['prev_tag_close'] = '</li>';
+		
+		
+			// $config['next_link'] = 'Next Page<i class="fa fa-long-arrow-right"></i>';
+			$config['next_link'] = 'Next';
+			$config['next_tag_open'] = '<li>';
+			$config['next_tag_close'] = '</li>';
+		
 
 			$config["per_page"] = 2;
 			$config["uri_segment"] = 3;
